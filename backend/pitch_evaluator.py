@@ -214,6 +214,7 @@ class PitchEvaluator:
 
     def evaluate_pitch(self, audio_file_path: str) -> Dict[str, Any]:
         try:
+            print(f"Starting evaluation for: {audio_file_path}")  # Log evaluation start
             # Transcribe audio
             transcript = self.transcribe_audio(audio_file_path)
             print(f"Transcription completed: {transcript[:100]}...")  # Debug log
@@ -227,6 +228,7 @@ class PitchEvaluator:
             
             # Calculate overall score
             overall_score = self._calculate_overall_score(content_analysis, delivery_analysis)
+            print(f"Overall score calculated: {overall_score}")  # Log overall score
             
             # Compile evaluation results
             evaluation = {
