@@ -154,8 +154,7 @@ class PitchEvaluator:
         - Ambitiousness Score = (reach_score + severity_score + difficulty_score) / 12 * 10
         - Implementation Score = (competition_score + differentiator_score + stage_score + financial_score) / 16 * 10
         - Delivery Score = (confidence_score + clarity_score) / 8 * 10
-        - Combined Score = (Ambitiousness Score * 0.35) + (Implementation Score * 0.5) + (Delivery Score * 0.15)
-
+        - Combined Score  
         Analyze the following transcript and provide detailed justifications for each rating:
 
         {transcript}
