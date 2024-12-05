@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pitch_evaluator import PitchEvaluator
 import asyncio
 import json
+from mangum import Mangum
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,7 +20,7 @@ app = FastAPI()
 # Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React app address
+    allow_origins=["*"],  # Update this with your CloudFront domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,6 +34,9 @@ evaluator = PitchEvaluator(
 
 # Store analysis results
 analysis_results = {}
+
+# Use environment variables
+PORT = int(os.getenv("PORT", 8000))
 
 @app.get("/")
 async def root():
@@ -86,3 +90,6 @@ async def get_results(filename: str):
 @app.get("/all-results")
 async def get_all_results():
     return analysis_results
+
+# Add the Lambda handler
+handler = Mangum(app)

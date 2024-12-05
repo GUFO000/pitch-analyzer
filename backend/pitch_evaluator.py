@@ -96,73 +96,13 @@ class PitchEvaluator:
                 "total_delivery_score": <average of above scores>
             }}
         }}
-                
-        Rating Criteria:
-
-        AMBITIOUSNESS CRITERIA:
-        1. Potential Reach
-        - High: Global impact affecting millions
-        - Medium: Regional/national impact affecting thousands
-        - Low: Local impact affecting hundreds
-
-        2. Problem Severity
-        - High: Critical issues affecting health, safety, or major economic factors
-        - Medium: Significant quality of life or efficiency improvements
-        - Low: Non-critical improvements
-
-        3. Problem Difficulty
-        - High: Requires breakthrough innovation or solving complex challenges
-        - Medium: Moderate technical challenges with some innovation needed
-        - Low: Straightforward implementation using existing solutions
-
-        IMPLEMENTATION CRITERIA:
-        1. Market Competition
-        - High: Emerging or underserved market with minimal competition
-        - Medium: Moderate competition with room for new entrants
-        - Low: Saturated market with strong established players
-
-        2. Key Differentiator
-        - High: Unique, innovative, and hard to replicate solution
-        - Medium: Moderate differentiation with some unique aspects
-        - Low: Limited differentiation from existing solutions
-
-        3. Stage of Solution
-        - High: Mature solution with existing clients and revenue
-        - Medium: Prototype or MVP with some traction
-        - Low: Idea stage with no real-world validation
-
-        4. Financial Model
-        - High: Clear, sustainable model with strong profit potential
-        - Medium: Viable model needing refinement
-        - Low: Unclear or potentially unsustainable model
-
-        DELIVERY CRITERIA:
-        1. Communication_effectiveness
-        - High: Clear, concise, and effective communication
-        - Medium: Somewhat effective but with room for improvement
-        - Low: Unclear, disorganized, or difficult to follow
-
-        2. Storytelling
-        - High: Extremely clear, organized, and easy to understand
-        - Medium: Moderately clear with some room for improvement
-        - Low: Unclear, disorganized, or difficult to follow
-
-        3. Authentic_expertise
-        - High: Convincing, charismatic, and highly confident delivery
-        - Medium: Somewhat confident but may lack conviction
-        - Low: Hesitant, nervous, or lacking confidence
-
-        4. Engagement_quality
-        - High: Extremely clear, organized, and easy to understand
-        - Medium: Moderately clear with some room for improvement
-        - Low: Unclear, disorganized, or difficult to follow
 
         Scoring Guidelines:
         10 - Perfect: Exceptional, really high quality
         8 - Really Good: Strong performance with minor room for improvement
         6 - Good: Solid performance meeting expectations
-        4 - Not Great: Below expectations with noticeable issues in few areas
-        2 - Really Poor: Below expectations with major issues in several areas
+        4 - Not Great: Below expectations with noticeable issues
+        2 - Really Poor: Major problems requiring complete revision
 
         Analyze this pitch transcript: {transcript}
         """
@@ -205,7 +145,7 @@ class PitchEvaluator:
                     response = self.openai_client.chat.completions.create(
                         model="gpt-3.5-turbo",
                         messages=[
-                            {"role": "system", "content": "You are an experienced startup investor and pitch analyst, you are obective and data driven. You will provide analysis in valid JSON format only, no other text."},
+                            {"role": "system", "content": "You are an experienced startup investor and pitch analyst, you are obective and give data driven. You will provide analysis in valid JSON format only, no other text."},
                             {"role": "user", "content": self.get_evaluation_prompt(transcript)}
                         ]
                     )
@@ -214,7 +154,7 @@ class PitchEvaluator:
                     response = self.openai_client.ChatCompletion.create(
                         model="gpt-3.5-turbo",
                         messages=[
-                            {"role": "system", "content": "You are an experienced startup investor and pitch analyst, you are obective and data driven. You will provide analysis in valid JSON format only, no other text."},
+                            {"role": "system", "content": "You are an experienced startup investor and pitch analyst, you are obective and give data driven.. You will provide analysis in valid JSON format only, no other text."},
                             {"role": "user", "content": self.get_evaluation_prompt(transcript)}
                         ]
                     )
@@ -259,10 +199,6 @@ class PitchEvaluator:
             # Calculate overall score
             overall_score = self._calculate_overall_score(content_analysis)
             print(f"Overall score calculated: {overall_score}")
-            
-            # Add debug logging for delivery score
-            print(f"Delivery evaluation data:")
-            print(json.dumps(content_analysis['delivery'], indent=2))
             
             # Compile evaluation results
             evaluation = {
